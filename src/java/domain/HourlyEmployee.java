@@ -1,11 +1,20 @@
 package domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import javax.persistence.*;
 
-public class HourlyEmployee extends Employee{
+@Entity
+@DiscriminatorValue("1")
+public class HourlyEmployee extends Employee implements Serializable{
+    @Id
+    @Column(name = "Employee_ID")
+    private int EmployeeID;
+    @Column(name = "Hourly_Rate")
     private double hourlyRate;
+    @Column(name = "Overtime_Rate")
     private double overtimeRate;
     
     public double calculateGrossPay(Date date){

@@ -7,12 +7,22 @@ import java.io.Serializable;
 import java.util.Date;
 
 import java.util.ArrayList;
+import javax.persistence.*;
 
+@Entity
+@DiscriminatorColumn(name = "Employee_Type", discriminatorType = DiscriminatorType.INTEGER)
 public abstract class Employee implements Serializable{
+    @Id
+    @Column(name = "Employee_ID")
     private int employeeID;
+    @Column(name = "Employee_Type")
+    private int employeeType;
+    @Column(name = "First_Name")
     private String firstName;
+    @Column(name = "Last_Name")
     private String lastName;
     private long SSN;
+    @Column(name = "User_ID")
     private String userID;
     private String password;
     

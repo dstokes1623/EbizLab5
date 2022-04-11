@@ -6,6 +6,7 @@ import domain.SalaryEmployee;
 import exceptions.RecordNotFoundException;
 
 import java.util.ArrayList;
+import javax.persistence.EntityManagerFactory;
 
 public class EmployeeDA {
     
@@ -24,10 +25,9 @@ public class EmployeeDA {
     
     public static Employee findByUserID(String userID) throws RecordNotFoundException{
         Employee employee = null;
-        for (int i = 0; i < employees.size(); i++){
-            if(employees.get(i).getUserID().equals(userID))
-                return employees.get(i);
-        }
+        
+        EntityManagerFactory em = PayrollSystemDA.getEmFactory();
+        System.out.println("Entity Manager Factory: " + em);
         
         RecordNotFoundException e = new RecordNotFoundException("Employee " + userID + " not found.");
         throw e;
