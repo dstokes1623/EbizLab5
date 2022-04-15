@@ -7,11 +7,10 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "Hourly_Employee")
 @DiscriminatorValue("1")
 public class HourlyEmployee extends Employee implements Serializable{
-    @Id
-    @Column(name = "Employee_ID")
-    private int EmployeeID;
+    
     @Column(name = "Hourly_Rate")
     private double hourlyRate;
     @Column(name = "Overtime_Rate")

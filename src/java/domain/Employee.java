@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import javax.persistence.*;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "Employee_Type", discriminatorType = DiscriminatorType.INTEGER)
+
 public abstract class Employee implements Serializable{
     @Id
     @Column(name = "Employee_ID")
@@ -102,6 +104,7 @@ public abstract class Employee implements Serializable{
         this.userID = userID;
     }
     
+    @Override
     public String toString(){
         return employeeID + "  " + lastName + ", " + firstName + "  " + SSN ;
     }

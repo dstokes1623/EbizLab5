@@ -5,6 +5,9 @@ import domain.Timecard;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 public class TimecardDA {
     private static ArrayList<Timecard> timecards = new ArrayList<Timecard>(5);
@@ -28,51 +31,31 @@ public class TimecardDA {
     }
     
     public static void initialize(){
-        Calendar calendar = Calendar.getInstance();
-        Timecard t;
-        Date date = new Date();
         
-        calendar.set(2022, 1, 6);
-        date = calendar.getTime();
-        
-        t = new Timecard();
-        t.setDate(date);
-        t.setEmployeeID(1002);
-        t.setHoursWorked(40);
-        t.setOvertimeHours(10);
-        t.add();
-       
-        t = new Timecard();
-        t.setDate(date);
-        t.setEmployeeID(1004);
-        t.setHoursWorked(40);
-        t.setOvertimeHours(12.5);
-        t.add();
-        
-        calendar.set(2022, 1, 7);
-        date = calendar.getTime();
-        
-        t = new Timecard();
-        t.setDate(date);
-        t.setEmployeeID(1002);
-        t.setHoursWorked(30);
-        t.setOvertimeHours(5);
-        t.add();
-        
-        t = new Timecard();
-        t.setDate(date);
-        t.setEmployeeID(1004);
-        t.setHoursWorked(40);
-        t.setOvertimeHours(5);
-        t.add();
     }
 
-    public static ArrayList<Timecard> getEmployeeTimecards(int ID) {
+    public static ArrayList<Timecard> getEmployeeTimecards(int userID) {
         employeeTimecards.clear();
                 
-        for (int i = 0; i < timecards.size(); i++)
-            if (timecards.get(i).getEmployeeID() == ID)
-                employeeTimecards.add(timecards.get(i));
+        EntityManager em = PayrollSystemDA.getEmFactory().createEntityManager();
+        
+        String qString = "Select tc FROM Timecard tc "
+                + "WHERE tc.employeeID = :ID";
+        TypedQuery<Timecard> q = em.createQuery(qString, Timecard.class);
+        q.setParameter("ID", userID);
+        
+        List<Timecard> tCards;
+        
+        try{
+            tCards = q.getResultList();
+            employeeTimecards = new ArrayList(tCards);
+        }
+        catch(Exception e){
+            
+        }
+        finally{
+            em.close();
+        }
         
         return employeeTimecards;
     }

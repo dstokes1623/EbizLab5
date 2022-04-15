@@ -6,7 +6,10 @@ import domain.SalaryEmployee;
 import exceptions.RecordNotFoundException;
 
 import java.util.ArrayList;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 
 public class EmployeeDA {
     
@@ -26,12 +29,32 @@ public class EmployeeDA {
     public static Employee findByUserID(String userID) throws RecordNotFoundException{
         Employee employee = null;
         
-        EntityManagerFactory em = PayrollSystemDA.getEmFactory();
-        System.out.println("Entity Manager Factory: " + em);
+        EntityManagerFactory emf = PayrollSystemDA.getEmFactory();
+        System.out.println("Entity Manager Factory: " + emf);
         
-        RecordNotFoundException e = new RecordNotFoundException("Employee " + userID + " not found.");
-        throw e;
+        EntityManager em = emf.createEntityManager();
+        
+        String qString = "SELECT emp FROM Employee emp " +
+                "Where emp.userID = :id";
+        TypedQuery<Employee> q = em.createQuery(qString, Employee.class);
+        q.setParameter("id", userID);
+        System.out.println(q);
+        
+        
+        try{
+            employee = q.getSingleResult();
+            return employee;
+        }
+        catch(NoResultException e){
+            RecordNotFoundException ex = new RecordNotFoundException("Employee not found");
+            throw ex;
+        }
+        finally{
+            em.close();
+        }
+        
 
+        
     }
     
     public static void initialize(){

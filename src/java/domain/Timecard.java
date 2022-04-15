@@ -8,12 +8,21 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import java.util.Date;
+import javax.persistence.*;
 
+@Entity
 public class Timecard implements Serializable{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "Timecard_ID")
     private int timecardID;
+    @Column(name = "Timecard_Date")
     private Date date;
+    @Column(name = "Employee_ID")
     private int employeeID;
+    @Column(name = "Hours_Worked")
     private double hoursWorked;
+    @Column(name = "Overtime_Hours")
     private double overtimeHours;
     
     public Timecard(){
