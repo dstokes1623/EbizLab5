@@ -49,14 +49,17 @@ public class HourlyEmployee extends Employee implements Serializable{
         return overtimeRate;
     }
 
+    @Override
     public void setHourlyRate(double hourlyRate) {
         this.hourlyRate = hourlyRate;
     }
     
+    @Override
     public void setOvertimeRate(double overtimeRate) {
         this.overtimeRate = overtimeRate;
     }
     
+    @Override
     public String toString(){
         return super.toString() + "  " + hourlyRate + "  " + overtimeRate;
     }

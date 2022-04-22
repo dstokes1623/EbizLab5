@@ -35,6 +35,7 @@ public abstract class Employee implements Serializable{
     }
     
     public double calculateGrossPay(Date date) {
+        System.out.println("calculating gross pay");
         return 0.0;
     }
     
@@ -50,7 +51,7 @@ public abstract class Employee implements Serializable{
         return employeeID;
     }
     
-    public static ArrayList<Employee> getEmployees() {
+    public static ArrayList<Employee> getEmployees() throws RecordNotFoundException {
         return EmployeeDA.getEmployees();
     }
 

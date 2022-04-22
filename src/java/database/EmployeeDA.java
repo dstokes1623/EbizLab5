@@ -6,6 +6,7 @@ import domain.SalaryEmployee;
 import exceptions.RecordNotFoundException;
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
@@ -58,52 +59,32 @@ public class EmployeeDA {
     }
     
     public static void initialize(){
-        Employee e;
         
-        e = new SalaryEmployee();
-        e.setEmployeeID(1001);
-        e.setFirstName("Bob");
-        e.setLastName("Smith");
-        e.setSSN(123445555);
-        e.setSalary(52000);
-        e.setUserID("User2");
-        e.setPassword("user2");
-        e.add();
-        
-        e = new HourlyEmployee();
-        e.setEmployeeID(1002);
-        e.setFirstName("Alice");
-        e.setLastName("Fontana");
-        e.setSSN(123445555);
-        e.setHourlyRate(10.0);
-        e.setOvertimeRate(1.5);
-        e.setUserID("x");
-        e.setPassword("x");
-        e.add();
-        
-        e = new SalaryEmployee();
-        e.setEmployeeID(1003);
-        e.setFirstName("Kim");
-        e.setLastName("Johnson");
-        e.setSSN(123445555);
-        e.setSalary(65000);
-        e.setUserID("User3");
-        e.setPassword("user3");
-        e.add();
-        
-        e = new HourlyEmployee();
-        e.setEmployeeID(1004);
-        e.setFirstName("Thomas");
-        e.setLastName("Arlinton");
-        e.setSSN(123445555);
-        e.setHourlyRate(12.50);
-        e.setOvertimeRate(1.5);
-        e.setUserID("User4");
-        e.setPassword("user4");
-        e.add();
     }
 
-    public static ArrayList<Employee> getEmployees() {
+    public static ArrayList<Employee> getEmployees() throws RecordNotFoundException {
+        employees.clear();
+                
+        EntityManager em = PayrollSystemDA.getEmFactory().createEntityManager();
+        
+        String qString = "Select emp FROM Employee emp ";
+        TypedQuery<Employee> q = em.createQuery(qString, Employee.class);
+        
+        
+        List<Employee> tCards;
+        
+        try{
+            tCards = q.getResultList();
+            employees = new ArrayList(tCards);
+        }
+        catch(NoResultException e){
+            RecordNotFoundException ex = new RecordNotFoundException("Employee not found");
+            throw ex;
+        }
+        finally{
+            em.close();
+        }
+        
         return employees;
     }
     

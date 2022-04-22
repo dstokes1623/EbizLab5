@@ -1,6 +1,7 @@
 package domain;
 
 import database.TimecardDA;
+import exceptions.RecordNotFoundException;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -13,8 +14,8 @@ import javax.persistence.*;
 @Entity
 public class Timecard implements Serializable{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "Timecard_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int timecardID;
     @Column(name = "Timecard_Date")
     private Date date;
@@ -40,7 +41,7 @@ public class Timecard implements Serializable{
         TimecardDA.delete(this);
     }
     
-    public static Timecard find(int id){
+    public static Timecard find(int id) throws RecordNotFoundException{
         return TimecardDA.find(id);
     }
 
@@ -61,7 +62,7 @@ public class Timecard implements Serializable{
         return employeeID;
     }
     
-    public static ArrayList<Timecard> getEmployeeTimecards(int ID){
+    public static ArrayList<Timecard> getEmployeeTimecards(int ID) throws RecordNotFoundException{
         return TimecardDA.getEmployeeTimecards(ID);
     }
     
@@ -113,11 +114,12 @@ public class Timecard implements Serializable{
         this.timecardID = timecardID;
     }
     
+    @Override
     public String toString(){
-        return getDateFormatted() + "  " + employeeID + "  " + hoursWorked + "  " + overtimeHours;
+        return timecardID + " " + getDateFormatted() + "  " + employeeID + "  " + hoursWorked + "  " + overtimeHours;
     }
     
-    public void update(){
+    public void update() throws RecordNotFoundException{
         TimecardDA.update(this);
     }
 }

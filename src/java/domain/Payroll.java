@@ -1,6 +1,7 @@
 package domain;
 
 import database.PayrollDA;
+import exceptions.RecordNotFoundException;
 import java.io.Serializable;
 import java.text.DateFormat;
 
@@ -8,12 +9,23 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import java.util.Date;
+import javax.persistence.*;
 
+@Entity
 public class Payroll implements Serializable{
+    @Id
+    @Column(name = "Timecard_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int payrollID;
+    @Column(name = "Payroll_Date")
     private Date date;
+    @Column(name = "Employee_ID")
     private int employeeID;
+    @Column(name = "Gross_Pay")
     private double grossPay;
+    @Column(name = "Total_Deductions")
     private double totalDeductions;
+    @Column(name = "Net_Pay")
     private double netPay;
     
     public Payroll(){}
@@ -22,9 +34,9 @@ public class Payroll implements Serializable{
         PayrollDA.add(this);
     }
     
-    public static void calculatePayroll(Date date) {
+    public static void calculatePayroll(Date date) throws RecordNotFoundException {
         ArrayList<Employee> employees = Employee.getEmployees();
-        ArrayList<WithholdingType>withholdingTypes = WithholdingType.getWithholdingTypes(); 
+        ArrayList<WithholdingType> withholdingTypes = WithholdingType.getWithholdingTypes(); 
         
         Payroll payroll;
         Employee emp;
@@ -85,7 +97,7 @@ public class Payroll implements Serializable{
         return currency.format(netPay);
     }
     
-    public static ArrayList<Payroll> getPayrollRecords() {
+    public static ArrayList<Payroll> getPayrollRecords() throws RecordNotFoundException {
         return PayrollDA.getPayrollRecords();
     }
 

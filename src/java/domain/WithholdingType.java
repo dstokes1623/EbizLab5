@@ -1,13 +1,23 @@
 package domain;
 
 import database.WithholdingTypeDA;
+import exceptions.RecordNotFoundException;
+import java.io.Serializable;
 
 import java.util.ArrayList;
+import javax.persistence.*;
 
-public class WithholdingType {
+@Entity
+@Table(name = "Withholding_Type")
+public class WithholdingType implements Serializable {
+    @Id
+    @Column(name = "Type_ID")
     private int ID;
+     @Column(name = "Description")
     private String description;
+      @Column(name = "Amount")
     private double amount;
+       @Column(name = "Rate")
     private double rate;
     
     public void add() {
@@ -30,7 +40,7 @@ public class WithholdingType {
         return rate;
     }
     
-    public static ArrayList<WithholdingType> getWithholdingTypes() {
+    public static ArrayList<WithholdingType> getWithholdingTypes() throws RecordNotFoundException {
         return WithholdingTypeDA.getWithholdingTypes();
     }
 
