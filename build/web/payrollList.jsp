@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -29,9 +30,9 @@
                 <tr>
                     <td><c:out value='${pay.dateFormatted}'/></td>
                     <td class="right"><c:out value='${pay.employeeID}'/></td>
-                    <td class="right"><c:out value='${pay.grossPay}'/></td>
-                    <td class="right"><c:out value='${pay.totalDeductions}'/></td>
-                    <td class="right"><c:out value='${pay.netPay}'/></td>
+                    <td class="right"><c:out value='${pay.grossPayFormatted}'/></td>
+                    <td class="right"><c:out value='${pay.totalDeductionsFormatted}'/></td>
+                    <td class="right"><c:out value='${pay.netPayFormatted}'/></td>
                 </tr>
             </c:forEach>
         </table>

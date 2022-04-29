@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Entity
 public class Payroll implements Serializable{
     @Id
-    @Column(name = "Timecard_ID")
+    @Column(name = "Payroll_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int payrollID;
     @Column(name = "Payroll_Date")

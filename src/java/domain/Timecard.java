@@ -66,7 +66,7 @@ public class Timecard implements Serializable{
         return TimecardDA.getEmployeeTimecards(ID);
     }
     
-    public static ArrayList<Timecard> getEmployeeTimecards(int ID, Date begDate, Date endDate) {
+    public static ArrayList<Timecard> getEmployeeTimecards(int ID, Date begDate, Date endDate) throws RecordNotFoundException {
         return TimecardDA.getEmployeeTimecards(ID, begDate, endDate);
     }
     

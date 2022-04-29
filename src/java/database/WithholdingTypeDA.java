@@ -37,7 +37,7 @@ public class WithholdingTypeDA {
                 
         EntityManager em = PayrollSystemDA.getEmFactory().createEntityManager();
         
-        String qString = "Select wt FROM Withholding_Type wt ";
+        String qString = "Select wt FROM WithholdingType wt ";
         TypedQuery<WithholdingType> q = em.createQuery(qString, WithholdingType.class);
         
         

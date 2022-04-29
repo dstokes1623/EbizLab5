@@ -78,7 +78,7 @@ VALUES
 INSERT INTO Timecard 
   (Timecard_Date, Employee_ID, Hours_Worked, Overtime_Hours)
 VALUES 
-  ('4/14/2022', 1001, 6, 2.5
+  ('4/14/2022', 1001, 6, 2.5);
 
 INSERT INTO Timecard 
   (Timecard_Date, Employee_ID, Hours_Worked, Overtime_Hours)

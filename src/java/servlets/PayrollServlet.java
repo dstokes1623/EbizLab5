@@ -62,7 +62,7 @@ public class PayrollServlet extends HttpServlet {
             System.out.println("Calculating Payroll \n \n \n");
             Payroll.calculatePayroll(date);
             pay = Payroll.getPayrollRecords();
-            System.out.println("Adding payroll records \n \n \n");
+            System.out.println("Adding payroll records \n \n \n" + pay);
             session.setAttribute("payroll", pay);
         }
         
