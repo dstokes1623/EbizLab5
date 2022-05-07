@@ -86,9 +86,32 @@ public class TimecardDA {
     public static void initialize(){
         
     }
-
+    public static ArrayList<Timecard> getAllTimecards() throws RecordNotFoundException {
+        timecards.clear();
+                
+        EntityManager em = PayrollSystemDA.getEmFactory().createEntityManager();
+        
+        String qString = "Select tc FROM Timecard tc ";
+        TypedQuery<Timecard> q = em.createQuery(qString, Timecard.class);
+        
+        List<Timecard> tCards;
+        
+        try{
+            tCards = q.getResultList();
+            timecards = new ArrayList(tCards);
+        }
+        catch(NoResultException e){
+            RecordNotFoundException ex = new RecordNotFoundException("Employee not found");
+            throw ex;
+        }
+        finally{
+            em.close();
+        }
+        
+        return timecards;
+    }
     public static ArrayList<Timecard> getEmployeeTimecards(int userID) throws RecordNotFoundException {
-        employeeTimecards.clear();
+        timecards.clear();
                 
         EntityManager em = PayrollSystemDA.getEmFactory().createEntityManager();
         

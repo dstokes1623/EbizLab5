@@ -100,6 +100,10 @@ public class Payroll implements Serializable{
     public static ArrayList<Payroll> getPayrollRecords() throws RecordNotFoundException {
         return PayrollDA.getPayrollRecords();
     }
+    
+    public static ArrayList<Payroll> getPayrollRecordsByID(int ID) throws RecordNotFoundException {
+        return PayrollDA.getPayrollRecordsByID(ID);
+    }
 
     public double getTotalDeductions() {
         return totalDeductions;

@@ -58,4 +58,31 @@ public class PayrollDA {
         
         return payrollRecords;
     }
+    public static ArrayList<Payroll> getPayrollRecordsByID(int ID) throws RecordNotFoundException {
+        payrollRecords.clear();
+                
+        EntityManager em = PayrollSystemDA.getEmFactory().createEntityManager();
+        
+        String qString = "Select pay FROM Payroll pay " +
+                "Where pay.employeeID = :id";
+        TypedQuery<Payroll> q = em.createQuery(qString, Payroll.class);
+        q.setParameter("id", ID);
+        
+        
+        List<Payroll> payroll;
+        
+        try{
+            payroll = q.getResultList();
+            payrollRecords = new ArrayList(payroll);
+        }
+        catch(NoResultException e){
+            RecordNotFoundException ex = new RecordNotFoundException("Employee not found");
+            throw ex;
+        }
+        finally{
+            em.close();
+        }
+        
+        return payrollRecords;
+    }
 }

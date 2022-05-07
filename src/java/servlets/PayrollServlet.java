@@ -5,7 +5,9 @@
  */
 package servlets;
 
+import domain.Employee;
 import domain.Payroll;
+import domain.UserRole;
 import exceptions.RecordNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -75,6 +77,24 @@ public class PayrollServlet extends HttpServlet {
             request.setAttribute("message", message);
             session.setAttribute("payroll", pay);
         }
+        }
+        if(option.equals("view")){
+            url = "/payrollList.jsp";
+            String idString = request.getParameter("empID");
+            int id = Integer.parseInt(idString);
+            UserRole ur = (UserRole)session.getAttribute("userRole");
+            Employee emp = (Employee)session.getAttribute("employee");
+            String message = "";
+            if(ur.isViewPayroll() == false){
+                boolean canViewRecord = emp.getEmployeeID() == id;
+                if(canViewRecord == false){
+                    url = "/payroll.jsp";
+                    message = "Your privelages only allow you to see your own payroll records. Please enter your employee id";
+                }
+            }
+            ArrayList payroll = Payroll.getPayrollRecordsByID(id);
+            request.setAttribute("message", message);
+            session.setAttribute("payroll", payroll);
         }
          getServletContext().getRequestDispatcher(url).forward(request, response);
     }

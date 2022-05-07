@@ -1,9 +1,12 @@
 package domain;
 
+import exceptions.RecordNotFoundException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.*;
 
 @Entity
@@ -16,8 +19,9 @@ public class HourlyEmployee extends Employee implements Serializable{
     @Column(name = "Overtime_Rate")
     private double overtimeRate;
     
+    @Override
     public double calculateGrossPay(Date date){
-        ArrayList<Timecard> timecards;
+        ArrayList<Timecard> timecards = null;
         Timecard timecard;
         Date beginDate, endDate, timecardDate;
         Calendar calendar = Calendar.getInstance();
@@ -28,7 +32,11 @@ public class HourlyEmployee extends Employee implements Serializable{
         calendar.add(Calendar.DATE, -6);
         beginDate = calendar.getTime();
         
-        timecards = Timecard.getEmployeeTimecards(this.getEmployeeID(), beginDate, endDate);
+        try {
+            timecards = Timecard.getEmployeeTimecards(this.getEmployeeID(), beginDate, endDate);
+        } catch (RecordNotFoundException ex) {
+            Logger.getLogger(HourlyEmployee.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         for(int i = 0; i < timecards.size(); i++) {
             timecard = timecards.get(i);

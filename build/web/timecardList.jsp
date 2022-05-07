@@ -12,6 +12,7 @@
 
         <table>
             <tr>
+                <th>Employee ID</th>
                 <th>Date</th>
                 <th>Hours Worked</th>
                 <th>Overtime</th>
@@ -19,6 +20,7 @@
 
             <c:forEach var="card" items="${timecards}">
                 <tr>
+                    <td><c:out value='${card.employeeID}'/></td>
                     <td><c:out value='${card.dateShort}'/></td>
                     <td class="right"><c:out value='${card.hoursWorkedFormatted}'/></td>
                     <td class="right"><c:out value='${card.overtimeHoursFormatted}'/></td>

@@ -3,6 +3,7 @@ package servlets;
 import domain.PayrollSystem;
 import domain.Employee;
 import domain.Timecard;
+import domain.UserRole;
 import exceptions.RecordNotFoundException;
 
 import java.util.ArrayList;
@@ -55,10 +56,15 @@ public class TimecardServlet extends HttpServlet {
         
         if (option.equals("list")){
             Employee employee = (Employee)session.getAttribute("employee");
+            UserRole ur = (UserRole)session.getAttribute("userRole");
             id = employee.getEmployeeID();
 
-            if(employee.getClass().getSimpleName().equals("HourlyEmployee")) {
+            if(employee.getClass().getSimpleName().equals("HourlyEmployee") && ur.isOwnTimecards()) {
                 ArrayList timecards = Timecard.getEmployeeTimecards(id);
+                session.setAttribute("timecards", timecards);
+                url = "/timecardList.jsp";
+            } else if(ur.isAllTimecards()){
+                ArrayList timecards = Timecard.getAllTimecards();
                 session.setAttribute("timecards", timecards);
                 url = "/timecardList.jsp";
             }

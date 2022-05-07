@@ -27,8 +27,19 @@ public abstract class Employee implements Serializable{
     @Column(name = "User_ID")
     private String userID;
     private String password;
+    @Column(name = "User_Role")
+    private String userRole;
+
     
     public Employee(){}
+    
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
+    }
     
     public void add() {
         EmployeeDA.add(this);
@@ -107,6 +118,6 @@ public abstract class Employee implements Serializable{
     
     @Override
     public String toString(){
-        return employeeID + "  " + lastName + ", " + firstName + "  " + SSN ;
+        return employeeID + "  " + lastName + ", " + firstName + "  " + SSN + " " + userRole ;
     }
 }

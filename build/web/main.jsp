@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,9 +19,18 @@
         </form>
         <br>
         <form action="payroll" method="post">
-            <label>Calculate Payroll</label>
+            <label>Payroll</label>
             <input type="hidden" name="option" value="payroll">
             <input type="submit" value="Select">
         </form>
+  
+    <br>
+    <c:if test="${userRole.updateUserRoles}">
+        <form action="UserRole" method="post">
+            <label>Update User Roles</label>
+            <input type="hidden" name="option" value="users">
+            <input type="submit" value="Select">
+        </form>
+    </c:if>
     </body>
 </html>
